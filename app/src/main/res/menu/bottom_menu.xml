@@ -14,7 +14,7 @@
 
     <item
         android:title="Профіль"
-        android:icon="@drawable/ic_bm_profile_image"
+        android:icon="@drawable/ic_bm_profile"
         android:id="@+id/authFragment" />
 
     <item

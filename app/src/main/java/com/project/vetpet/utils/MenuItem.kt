@@ -8,10 +8,10 @@ class MenuItem(
     companion object{
         fun addMenuItems(): ArrayList<MenuItem> {
             val items = arrayListOf<MenuItem>()
-            items.add(MenuItem(1,"Мої улюбленці", "ic_paw"))
-            items.add(MenuItem(2,"Прийоми", "ic_calendar_menu"))
-            items.add(MenuItem(3,"Благодійність", "ic_charity"))
-            items.add(MenuItem(4,"Клініки поруч", "ic_pet_clinic"))
+            items.add(MenuItem(1,"Мої улюбленці", "ic_acc_menu_paw"))
+            items.add(MenuItem(2,"Прийоми", "ic_acc_menu_calendar"))
+            items.add(MenuItem(3,"Благодійність", "ic_acc_menu_charity"))
+            items.add(MenuItem(4,"Клініки поруч", "ic_acc_menu_clinic"))
             return items
         }
     }

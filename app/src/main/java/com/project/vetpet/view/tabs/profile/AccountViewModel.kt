@@ -8,12 +8,12 @@ import com.project.vetpet.model.User
 import com.project.vetpet.model.service.UserService
 
 class AccountViewModel(
-    private val firebaseService: UserService
+    private val userService: UserService
 ): ViewModel() {
 
     fun deleteUser(){
         User.currentUser = null
-        firebaseService.logOut()
+        userService.logOut()
         Preferences.deleteSharedPreferences()
     }
 
