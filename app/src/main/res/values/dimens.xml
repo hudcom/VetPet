@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="icons_width"> 25dp </dimen>
+    <dimen name="icons_height"> 25dp </dimen>
+    <dimen name="bb_icons_height">20dp</dimen>
+    <dimen name="bb_icons_width">20dp</dimen>
+
+    <dimen name="logo_size">100dp</dimen>
+
+    <dimen name="big_width">260dp</dimen>
+    <dimen name="small_space">12dp</dimen>
+    <dimen name="medium_space">20dp</dimen>
+    <dimen name="large_space">30dp</dimen>
+    <dimen name="very_large_space">60dp</dimen>
+
+    <dimen name="big_text">20sp</dimen>
+
+</resources>

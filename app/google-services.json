@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "253944371560",
+    "firebase_url": "https://vetpetdb-63a06-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "vetpetdb-63a06",
+    "storage_bucket": "vetpetdb-63a06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253944371560:android:799f2508ceadca36375edd",
+        "android_client_info": {
+          "package_name": "com.project.vetpet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKGl7vJxrhqy_nqZOUg2RfTmt_eEOaRAQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

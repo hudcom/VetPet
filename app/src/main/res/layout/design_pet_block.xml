@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pet_block"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/style_block_round_corner"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
+
+    <ImageView
+        android:id="@+id/petPhoto"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginVertical="15dp"
+        android:layout_marginStart="15dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_cat_photo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/petName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/petPhoto"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/petText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/age_with_colon"
+        app:layout_constraintStart_toEndOf="@+id/petPhoto"
+        app:layout_constraintTop_toBottomOf="@id/petName" />
+
+    <TextView
+        android:id="@+id/petAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        app:layout_constraintStart_toEndOf="@+id/petText1"
+        app:layout_constraintTop_toBottomOf="@id/petName" />
+
+    <TextView
+        android:id="@+id/petText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/breed_with_colon"
+        app:layout_constraintStart_toEndOf="@+id/petPhoto"
+        app:layout_constraintTop_toBottomOf="@id/petAge" />
+
+    <TextView
+        android:id="@+id/petBreed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="6dp"
+        android:ellipsize="end"
+        android:lines="1"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintEnd_toStartOf="@+id/petInfoEditBtn"
+        app:layout_constraintStart_toEndOf="@+id/petText2"
+        app:layout_constraintTop_toBottomOf="@id/petAge" />
+
+    <ImageButton
+        android:id="@+id/petInfoEditBtn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/ic_edit_pen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/petPhoto"
+        android:contentDescription="@string/app_name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

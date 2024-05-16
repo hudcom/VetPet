@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Головна"
+        android:icon="@drawable/ic_bm_home"
+        android:id="@+id/mainFragment" />
+
+    <item
+        android:title="Сповіщення"
+        android:icon="@drawable/ic_bm_notifications"
+        android:id="@+id/notificationFragment"/>
+
+    <item
+        android:title="Профіль"
+        android:icon="@drawable/ic_bm_profile_image"
+        android:id="@+id/authFragment" />
+
+    <item
+        android:title="Мапа"
+        android:icon="@drawable/ic_bm_map"
+        android:id="@+id/mapsFragment"/>
+
+    <item
+        android:title="Більше"
+        android:id="@+id/moreFragment"
+        android:icon="@drawable/ic_bm_more"/>
+</menu>

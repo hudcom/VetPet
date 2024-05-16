@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/style_bg_main_gradient"
+    tools:context=".view.pets.AddPetFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/addBlock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/large_space"
+        android:background="@drawable/style_block_round_corner"
+        android:elevation="10dp"
+        android:paddingVertical="@dimen/large_space"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="@dimen/logo_size"
+            android:layout_height="@dimen/logo_size"
+            android:layout_marginTop="@dimen/medium_space"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintBottom_toTopOf="@+id/addPetTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_main_logo" />
+
+        <TextView
+            android:id="@+id/addPetTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="@string/add_pet"
+            android:textColor="@color/black"
+            android:textSize="@dimen/big_text"
+            app:layout_constraintBottom_toTopOf="@+id/petNameTextInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/petNameTextInput"
+            android:layout_width="@dimen/big_width"
+            android:layout_height="wrap_content"
+            android:autofillHints="name"
+            android:hint="@string/name"
+            app:layout_constraintBottom_toTopOf="@id/petAge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addPetTitle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/petNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:lines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/age_with_colon"
+            android:layout_marginEnd="@dimen/small_space"
+            app:layout_constraintBottom_toBottomOf="@+id/petAge"
+            app:layout_constraintEnd_toStartOf="@+id/petAge"
+            app:layout_constraintTop_toTopOf="@+id/petAge" />
+
+
+        <Spinner
+            android:id="@+id/petAge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="@dimen/very_large_space"
+            android:minHeight="35dp"
+            android:spinnerMode="dialog"
+            app:layout_constraintBottom_toTopOf="@+id/petType"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/petNameTextInput" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/type"
+            android:layout_marginEnd="@dimen/small_space"
+            app:layout_constraintBottom_toBottomOf="@+id/petType"
+            app:layout_constraintEnd_toStartOf="@+id/petType"
+            app:layout_constraintTop_toTopOf="@+id/petType" />
+
+
+        <Spinner
+            android:id="@+id/petType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="@dimen/very_large_space"
+            android:minHeight="35dp"
+            android:spinnerMode="dialog"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/petAge" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/petBreedTextInput"
+            android:layout_width="@dimen/big_width"
+            android:layout_height="wrap_content"
+            android:hint="@string/breed"
+            app:layout_constraintBottom_toTopOf="@id/addPetProgressBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/petType">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/petBreedEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:lines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/addPetProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/petBreedTextInput"
+            app:layout_constraintBottom_toTopOf="@+id/addPetBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/addPetBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/medium_space"
+            android:background="@drawable/style_btn_purple"
+            android:text="@string/add"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addPetProgressBar" />
+
+        <!--
+        <TextView
+            android:id="@+id/add_pet_error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_light"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pets_spinner"
+            app:layout_constraintEnd_toEndOf="parent"/>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
