@@ -46,70 +46,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-
-        <!--<EditText
-            style="@style/ProjectEditTextStyle"
-            android:id="@+id/register_block_name_input"
-            android:autofillHints="name"
-            android:hint="@string/name"
-            app:layout_constraintTop_toBottomOf="@+id/add_pet_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <EditText
-            style="@style/ProjectEditTextStyle"
-            android:id="@+id/register_block_surname_input"
-            android:autofillHints="surname"
-            android:hint="@string/surname"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_block_name_input" />
-
-        <EditText
-            style="@style/ProjectEditTextStyle"
-            android:id="@+id/register_block_login_input"
-            android:autofillHints="username"
-            android:hint="@string/login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_block_surname_input" />
-
-        <EditText
-            style="@style/ProjectEditTextStyle"
-            android:id="@+id/register_block_password_input"
-            android:autofillHints="password"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_block_login_input" />
-
-        <EditText
-            style="@style/ProjectEditTextStyle"
-            android:id="@+id/register_block_number_input"
-            android:autofillHints="phone"
-            android:hint="@string/phone"
-            android:inputType="number"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_block_password_input" />
-
-        <EditText
-            style="@style/ProjectEditTextStyle"
-            android:id="@+id/register_block_location_input"
-            android:autofillHints="emailAddress"
-            android:hint="@string/location_city"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_block_number_input" />
--->
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailTextInput"
             android:layout_width="@dimen/big_width"
             android:layout_height="wrap_content"
             android:hint="@string/field_email"
-            app:layout_constraintBottom_toTopOf="@id/passwordTextInput"
+            app:layout_constraintBottom_toTopOf="@id/nameTextInput"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/registerTitle">
@@ -125,6 +67,27 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameTextInput"
+            android:layout_width="@dimen/big_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_space"
+            android:hint="@string/name_nickname"
+            app:layout_constraintBottom_toTopOf="@id/passwordTextInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emailTextInput">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                android:lines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordTextInput"
             android:layout_width="@dimen/big_width"
             android:layout_height="wrap_content"
@@ -133,15 +96,25 @@
             app:layout_constraintBottom_toTopOf="@id/passwordRepeatTextInput"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/emailTextInput">
+            app:layout_constraintTop_toBottomOf="@id/nameTextInput"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/dark_gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:lines="1" />
+
+            <ImageButton
+                android:id="@+id/passwordToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/app_name" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -154,7 +127,9 @@
             app:layout_constraintBottom_toTopOf="@id/linkToAuth"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/passwordTextInput">
+            app:layout_constraintTop_toBottomOf="@id/passwordTextInput"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/dark_gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordRepeatEditText"
@@ -163,6 +138,14 @@
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:lines="1" />
+
+            <ImageButton
+                android:id="@+id/passwordRepeatToggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/app_name" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -1,5 +1,6 @@
 package com.project.vetpet.view.tabs.profile
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
 
 import com.project.vetpet.utils.MenuItem
@@ -27,6 +28,10 @@ class AccountViewModel(
 
     fun getMenuItemsList(): ArrayList<MenuItem>{
         return MenuItem.addMenuItems()
+    }
+
+    fun getUser(): Bundle {
+        return User.currentUser!!.toBundle()
     }
 
 }

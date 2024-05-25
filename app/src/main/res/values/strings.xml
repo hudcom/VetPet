@@ -101,8 +101,9 @@
     <string name="ua_number_code">+38</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="user_login">Логін: </string>
-    <string name="user_full_name">User full name</string>
+    <string name="user_full_name">Ім\'я користувача</string>
     <string name="name">Ім\'я</string>
+    <string name="name_nickname">Ім\'я/нікнейм</string>
     <string name="surname">Прізвище</string>
     <string name="phone">Телефон</string>
     <string name="choose">Оберіть</string>
@@ -119,5 +120,6 @@
     <string name="delete">Видалити</string>
     <string name="edit_info_label">Редагувати інформацію про улюбленця</string>
     <string name="edit">Змінити</string>
+    <string name="acc_edit_info_label">Редагувати інформацію про користувача</string>
 
 </resources>

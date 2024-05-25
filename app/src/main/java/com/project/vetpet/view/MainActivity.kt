@@ -7,14 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.project.vetpet.Navigator
 import com.project.vetpet.R
 import com.project.vetpet.databinding.ActivityMainBinding
 
 const val TAG = "Project log"
 
 
-class MainActivity : AppCompatActivity(), Navigator {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavView: BottomNavigationView
@@ -104,18 +103,9 @@ class MainActivity : AppCompatActivity(), Navigator {
             }
         }
     }
-
-    override fun goBack() {
-        navController.popBackStack()
-    }
-
-    override fun navigateTo(fragmentId: Int): Boolean {
+     private fun navigateTo(fragmentId: Int): Boolean {
         navController.navigate(fragmentId)
         return true
-    }
-
-    override fun writeLog(text: String) {
-        Log.d("Project log", text)
     }
 }
 

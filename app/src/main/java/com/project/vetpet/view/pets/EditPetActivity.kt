@@ -1,12 +1,20 @@
 package com.project.vetpet.view.pets
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.SpinnerAdapter
 import androidx.activity.viewModels
+import androidx.navigation.fragment.findNavController
+import com.project.vetpet.R
 import com.project.vetpet.databinding.ActivityEditPetBinding
+import com.project.vetpet.view.MainActivity
+import com.project.vetpet.view.TAG
 import com.project.vetpet.view.factory
 
 class EditPetActivity : AppCompatActivity() {
@@ -35,6 +43,11 @@ class EditPetActivity : AppCompatActivity() {
         getBundle()
     }
 
+    private fun hideKeyboard(view: View) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
     private fun setListeners() {
         binding.editPetBtn.setOnClickListener {
             editBtnClicked()
@@ -49,7 +62,8 @@ class EditPetActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener {
-            onBackPressed() }
+            finalizeActivity()
+        }
     }
 
     private fun initTypeSpinner(){
@@ -108,6 +122,7 @@ class EditPetActivity : AppCompatActivity() {
     }
 
     private fun finalizeActivity(){
+        hideKeyboard(binding.editBlock)
         stopLoadingAnimation()
         finish()
     }

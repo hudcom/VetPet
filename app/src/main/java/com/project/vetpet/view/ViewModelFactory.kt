@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.project.vetpet.App
+import com.project.vetpet.view.tabs.profile.EditAccountViewModel
 import com.project.vetpet.view.tabs.profile.AccountViewModel
 import com.project.vetpet.view.pets.AddPetViewModel
 import com.project.vetpet.view.pets.EditPetViewModel
@@ -25,6 +26,7 @@ class ViewModelFactory(
             MyPetsViewModel::class.java -> { MyPetsViewModel(app.petService) }
             AddPetViewModel::class.java -> { AddPetViewModel(app.petService) }
             EditPetViewModel::class.java -> { EditPetViewModel(app.petService) }
+            EditAccountViewModel::class.java -> { EditAccountViewModel(app.userService, app.petService) }
             else -> {
                 throw IllegalStateException("Unknown view model class")
             }

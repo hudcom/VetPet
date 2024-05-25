@@ -2,14 +2,15 @@ package com.project.vetpet.view.dialog
 
 import android.app.Activity
 import android.app.AlertDialog
+import com.project.vetpet.R
 
 
-class CloseDialog(private val listener: DialogListener) {
+class CustomDialog(private val listener: DialogListener) {
 
-    fun createDialog(activity: Activity) {
-        val builder = AlertDialog.Builder(activity)
-        builder.setTitle("Підтвердження")
-            .setMessage("Ви дійсно хочете вийти з аккаунту?")
+    fun createDialog(activity: Activity, title:String, message:String) {
+        val builder = AlertDialog.Builder(activity, R.style.AlertDialogCustom)
+        builder.setTitle(title)
+            .setMessage(message)
             .setCancelable(true)
             .setPositiveButton("Так") { _, _ ->
                 listener.onPositiveClick()

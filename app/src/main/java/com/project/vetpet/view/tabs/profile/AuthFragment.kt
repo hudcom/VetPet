@@ -2,23 +2,28 @@ package com.project.vetpet.view.tabs.profile
 
 import android.content.Context
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputEditText
 import com.project.vetpet.R
 import com.project.vetpet.databinding.FragmentAuthBinding
+import com.project.vetpet.utils.ToastNotifier
+import com.project.vetpet.utils.TypeLogs
 import com.project.vetpet.view.BaseFragment
 import com.project.vetpet.view.TAG
 import com.project.vetpet.view.factory
 
 
-class AuthFragment : BaseFragment(){
+class AuthFragment : BaseFragment(), ToastNotifier {
 
     private lateinit var binding: FragmentAuthBinding
     private val viewModel: AuthViewModel by viewModels{ factory() }
@@ -36,7 +41,6 @@ class AuthFragment : BaseFragment(){
 
         setOnClickListeners()
         setOnBackPressedKeyListener(view)
-        writeLogs("[onViewCreated]: Auth fragment")
     }
 
     private fun setOnClickListeners() {
@@ -54,7 +58,25 @@ class AuthFragment : BaseFragment(){
             hideKeyboard(requireView())
             onAuthButtonPressed()
         }
+
         binding.linkToReg.setOnClickListener { findNavController().navigate(R.id.registerFragment) }
+        setOnToggleButtonClickAction(binding.passwordToggle,binding.passwordEditText)
+    }
+
+
+    private fun setOnToggleButtonClickAction(toggle: ImageButton, passwordEditText: TextInputEditText){
+        toggle.setOnClickListener {
+            // Перемикання видимості пароля
+            val inputType = if (passwordEditText.inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            } else {
+                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            }
+            passwordEditText.inputType = inputType
+
+            // Переміщення курсора в кінець тексту
+            passwordEditText.setSelection(passwordEditText.text?.length ?: 0)
+        }
     }
 
     /*
@@ -99,11 +121,11 @@ class AuthFragment : BaseFragment(){
     private fun checkUser(){
         if (viewModel.hasCurrentUser()){
             writeLogs("Authorized")
-            showShortToast("Користувач авторизований")
+            showToast("Користувач авторизований")
             findNavController().navigate(R.id.accountFragment)
         }
         else {
-            showShortToast("Невірний логін або пароль")
+            showToast("Невірний логін або пароль")
             writeLogs("[checkUser] Authorization Error")
         }
     }
@@ -111,6 +133,11 @@ class AuthFragment : BaseFragment(){
     private fun hideKeyboard(view: View) {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun createNotifier(){
+        // Передаємо інтерфейс у ViewModel
+        viewModel.toastNotifier = this
     }
 
     /*
@@ -132,11 +159,16 @@ class AuthFragment : BaseFragment(){
     /*
     * Support methods
     * */
-    private fun writeLogs(text:String){
-        Log.d(TAG,text)
+
+    override fun showToast(message: String) {
+        Toast.makeText(requireContext(),message,Toast.LENGTH_SHORT).show()
     }
 
-    private fun showShortToast(text:String){
-        Toast.makeText(requireContext(),text,Toast.LENGTH_SHORT).show()
+    override fun writeLogs(message: String, type: TypeLogs) {
+        when(type){
+            TypeLogs.INFO -> Log.d(TAG,message)
+            TypeLogs.ERROR -> Log.e(TAG,message)
+            TypeLogs.WARNING -> Log.w(TAG,message)
+        }
     }
 }

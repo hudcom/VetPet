@@ -16,6 +16,9 @@
         android:theme="@style/Theme.VetPet"
         tools:targetApi="31">
         <activity
+            android:name=".view.tabs.profile.EditAccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.pets.EditPetActivity"
             android:exported="false" />
 

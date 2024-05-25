@@ -16,6 +16,7 @@ import com.project.vetpet.view.TAG
 class PetService {
 
     private val petList: MutableList<Pet> = mutableListOf()
+    private val deletePetsList = mutableListOf<Pet>()
 
     private fun getDatabase(): FirebaseDatabase = Firebase.database
 
@@ -38,10 +39,64 @@ class PetService {
         myRef.updateChildren(getUpdates(oldName,pet))
     }
 
+    fun editAllUsersPet(email:String, newEmail:String){
+        val myRef = getDatabase().getReference(REFERENCE)
+        val query = myRef.orderByChild(OWNER).equalTo(email)
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Цей метод буде викликаний при зміні даних відповідно до запиту
+                for (snapshot in dataSnapshot.children) {
+                    // Отримуємо дані з кожного запису
+                    val pet = snapshot.getValue(Pet::class.java)
+                    if (pet != null) {
+                        // Оновлюємо поле 'owner'
+                        val petKey = snapshot.key
+                        if (petKey != null) {
+                            myRef.child(petKey).child(OWNER).setValue(newEmail)
+                                .addOnSuccessListener {
+                                    Log.d(TAG, "Owner updated for pet: $petKey")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.e(TAG, "Failed to update owner for pet: $petKey", e)
+                                }
+                        }
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
+    }
+
     fun deletePet(name: String){
         val myRef = getDatabase().getReference(REFERENCE)
         // Видалення файла з Realtime Database
         myRef.child(name).removeValue()
+    }
+
+    fun deleteAllUsersPets(email:String){
+        val myRef = getDatabase().getReference(REFERENCE)
+        val query = myRef.orderByChild(OWNER).equalTo(email)
+
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Цей метод буде викликаний при зміні даних відповідно до запиту
+                for (snapshot in dataSnapshot.children) {
+                    // Отримуємо дані з кожного запису
+                    val value = snapshot.getValue<Pet>()
+                    if (value != null) {
+                        // Видалення файла з Realtime Database
+                        getDatabase().getReference(REFERENCE).child(value.name.toString()).removeValue()
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
     }
 
     private fun getUpdates(oldName:String?, pet: Pet): HashMap<String, Any>{
@@ -54,7 +109,7 @@ class PetService {
         Log.d(TAG,"EDIT ELEMENT $oldName")
         //Викликаємо метод  для створення нового та видалення старого запису
         if (oldName != pet.name){
-            editPetInRD(oldName!!,pet.name!!)
+            editPetInRealtimeDB(oldName!!,pet.name!!)
         }
         return updates
     }
@@ -95,7 +150,7 @@ class PetService {
         }
     }
 
-    private fun editPetInRD(oldName: String, newName: String){
+    private fun editPetInRealtimeDB(oldName: String, newName: String){
         val oldRef = getDatabase().getReference("$REFERENCE/$oldName")
 
         oldRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -114,7 +169,6 @@ class PetService {
             }
         })
     }
-
 
     companion object{
         private const val REFERENCE = "pets"

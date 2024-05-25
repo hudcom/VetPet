@@ -40,10 +40,10 @@ class MainActivityViewModel(
     }
 
     fun getTopBarLocation():String {
-        return if (User.hasCurrentUser() && User.currentUser?.city != "null")
-            User.currentUser?.city.toString()
-        else
-            "Ваше місто"
+       if (User.currentUser?.city != "null" && User.currentUser?.city != null && User.currentUser?.city != "")
+           return User.currentUser?.city.toString()
+
+        return "Ваше місто"
     }
 
 }

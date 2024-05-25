@@ -1,13 +1,13 @@
 package com.project.vetpet.view.tabs.profile
 
+
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.provider.CalendarContract.Colors
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -16,15 +16,16 @@ import com.project.vetpet.R
 import com.project.vetpet.view.MainActivity
 import com.project.vetpet.adapters.MenuItemsAdapter
 import com.project.vetpet.databinding.FragmentAccountBinding
+import com.project.vetpet.model.User
 import com.project.vetpet.view.BaseFragment
 import com.project.vetpet.view.dialog.DialogListener
-import com.project.vetpet.view.dialog.CloseDialog
+import com.project.vetpet.view.dialog.CustomDialog
 import com.project.vetpet.view.factory
-import com.project.vetpet.view.tabs.profile.AccountViewModel
 
 class AccountFragment : BaseFragment(), DialogListener, MenuItemsAdapter.AccountFragmentCallback {
     private lateinit var binding: FragmentAccountBinding
     private val viewModel: AccountViewModel by viewModels{ factory() }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,14 +38,19 @@ class AccountFragment : BaseFragment(), DialogListener, MenuItemsAdapter.Account
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        initTextView()
-        setOnClickListener()
         setOnBackPressedKeyListener(view)
     }
 
     override fun onResume() {
         super.onResume()
+
+        if (User.currentUser == null){
+            (activity as MainActivity).updateBottomNavigationMenu(R.id.mainFragment)
+            findNavController().popBackStack(R.id.mainFragment,false)
+        }
+
+        initTextView()
+        setOnClickListener()
         (activity as MainActivity).initTopBar()
         initRecyclerView()
     }
@@ -65,7 +71,8 @@ class AccountFragment : BaseFragment(), DialogListener, MenuItemsAdapter.Account
         binding.accountUserFullName.text = userName
         if (userName == "Ім'я користувача"){
             binding.accountUserFullName.setTextColor(Color.RED)
-        }
+        } else
+            binding.accountUserFullName.setTextColor(Color.BLACK)
 
         binding.accountUserLogin.text = viewModel.getUserEmail()
     }
@@ -76,12 +83,13 @@ class AccountFragment : BaseFragment(), DialogListener, MenuItemsAdapter.Account
     }
 
     private fun openEditPanel(){
-        Toast.makeText(requireContext(), "Відкрито панель редагування профілю", Toast.LENGTH_SHORT).show()
-        // Todo
+        val intent = Intent(requireContext(), EditAccountActivity::class.java)
+        intent.putExtra("user", viewModel.getUser())
+        startActivity(intent)
     }
 
     private fun showCloseAccDialog() {
-        CloseDialog(this).createDialog(requireActivity())
+        CustomDialog(this).createDialog(requireActivity(),"Підтвердження","Ви дійсно хочете вийти з аккаунту?")
     }
 
     override fun onPositiveClick() {
