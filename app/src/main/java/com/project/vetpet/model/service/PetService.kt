@@ -12,108 +12,35 @@ import com.google.firebase.ktx.Firebase
 import com.project.vetpet.model.Pet
 import com.project.vetpet.model.User
 import com.project.vetpet.view.TAG
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class PetService {
 
     private val petList: MutableList<Pet> = mutableListOf()
-    private val deletePetsList = mutableListOf<Pet>()
 
     private fun getDatabase(): FirebaseDatabase = Firebase.database
 
-    fun addPet(pet: Pet){
-        // Отримання посилання на вашу таблицю у базі даних
+    /**
+     * Add Pet
+     */
+    suspend fun addPet(pet: Pet): Boolean = suspendCoroutine { cont ->
         val myRef = getDatabase().getReference(REFERENCE)
-
         myRef.child(pet.name!!).setValue(createObject(pet))
-    }
-
-    fun getPetList(): MutableList<Pet> {
-        petList.clear()
-        readPetList()
-        return petList
-    }
-
-    fun editPet(oldName:String?, pet: Pet){
-        val myRef = getDatabase().getReference("$REFERENCE/$oldName")
-
-        myRef.updateChildren(getUpdates(oldName,pet))
-    }
-
-    fun editAllUsersPet(email:String, newEmail:String){
-        val myRef = getDatabase().getReference(REFERENCE)
-        val query = myRef.orderByChild(OWNER).equalTo(email)
-
-        query.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Цей метод буде викликаний при зміні даних відповідно до запиту
-                for (snapshot in dataSnapshot.children) {
-                    // Отримуємо дані з кожного запису
-                    val pet = snapshot.getValue(Pet::class.java)
-                    if (pet != null) {
-                        // Оновлюємо поле 'owner'
-                        val petKey = snapshot.key
-                        if (petKey != null) {
-                            myRef.child(petKey).child(OWNER).setValue(newEmail)
-                                .addOnSuccessListener {
-                                    Log.d(TAG, "Owner updated for pet: $petKey")
-                                }
-                                .addOnFailureListener { e ->
-                                    Log.e(TAG, "Failed to update owner for pet: $petKey", e)
-                                }
-                        }
-                    }
-                }
+            .addOnSuccessListener {
+                cont.resume(true)
             }
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "Failed to read value.", error.toException())
+            .addOnFailureListener { e ->
+                cont.resumeWithException(e)
             }
-        })
     }
-
-    fun deletePet(name: String){
-        val myRef = getDatabase().getReference(REFERENCE)
-        // Видалення файла з Realtime Database
-        myRef.child(name).removeValue()
-    }
-
-    fun deleteAllUsersPets(email:String){
-        val myRef = getDatabase().getReference(REFERENCE)
-        val query = myRef.orderByChild(OWNER).equalTo(email)
-
-        query.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Цей метод буде викликаний при зміні даних відповідно до запиту
-                for (snapshot in dataSnapshot.children) {
-                    // Отримуємо дані з кожного запису
-                    val value = snapshot.getValue<Pet>()
-                    if (value != null) {
-                        // Видалення файла з Realtime Database
-                        getDatabase().getReference(REFERENCE).child(value.name.toString()).removeValue()
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "Failed to read value.", error.toException())
-            }
-        })
-    }
-
-    private fun getUpdates(oldName:String?, pet: Pet): HashMap<String, Any>{
-        val updates = HashMap<String, Any>()
-        //Оновлюємо поля запису
-        updates[PET_AGE] = pet.age!!
-        updates[PET_TYPE] = pet.type!!
-        updates[PET_BREED] = pet.breed!!
-        //Документуємо
-        Log.d(TAG,"EDIT ELEMENT $oldName")
-        //Викликаємо метод  для створення нового та видалення старого запису
-        if (oldName != pet.name){
-            editPetInRealtimeDB(oldName!!,pet.name!!)
-        }
-        return updates
-    }
-
     private fun createObject(pet: Pet): Map<String,Any?> {
         // Створення об'єкта, який ви хочете додати до таблиці
         return mapOf(
@@ -123,21 +50,31 @@ class PetService {
             OWNER to pet.owner)
     }
 
-    private fun readPetList(){
+    /**
+     * Read Pet
+     */
+    suspend fun getPetList(): MutableList<Pet> {
+        petList.clear()
+        readPetList()
+        return petList
+    }
+    private suspend fun readPetList() {
         val myRef = getDatabase().getReference(REFERENCE)
         val query = myRef.orderByChild(OWNER).equalTo(User.currentUser?.email)
 
-        query.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                dataChange(dataSnapshot)
-            }
+        suspendCoroutine<Unit> { cont ->
+            query.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    dataChange(dataSnapshot)
+                    cont.resume(Unit)
+                }
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.w(TAG, "Failed to read value.", error.toException())
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    cont.resumeWithException(error.toException())
+                }
+            })
+        }
     }
-
     private fun dataChange(dataSnapshot: DataSnapshot){
         // Цей метод буде викликаний при зміні даних відповідно до запиту
         for (snapshot in dataSnapshot.children) {
@@ -150,6 +87,36 @@ class PetService {
         }
     }
 
+
+    /**
+     * Edit Pet
+     */
+    suspend fun editPet(oldName: String?, pet: Pet): Boolean = suspendCoroutine { cont ->
+        val myRef = getDatabase().getReference("$REFERENCE/$oldName")
+
+        myRef.updateChildren(getUpdates(oldName, pet))
+            .addOnSuccessListener {
+                cont.resume(true)
+            }
+            .addOnFailureListener { e ->
+                cont.resumeWithException(e)
+            }
+    }
+    private fun getUpdates(oldName:String?, pet: Pet): HashMap<String, Any>{
+        val updates = HashMap<String, Any>()
+        //Оновлюємо поля запису
+        updates[PET_AGE] = pet.age!!
+        updates[PET_TYPE] = pet.type!!
+        updates[PET_BREED] = pet.breed!!
+
+        //Викликаємо метод  для створення нового та видалення старого запису
+        if (oldName != pet.name){
+            editPetInRealtimeDB(oldName!!,pet.name!!)
+        }
+
+        Log.d(TAG,"EDIT ELEMENT $oldName")
+        return updates
+    }
     private fun editPetInRealtimeDB(oldName: String, newName: String){
         val oldRef = getDatabase().getReference("$REFERENCE/$oldName")
 
@@ -169,6 +136,77 @@ class PetService {
             }
         })
     }
+    suspend fun editAllUsersPet(email: String, newEmail: String): Boolean = suspendCoroutine { cont ->
+        val myRef = getDatabase().getReference(REFERENCE)
+        val query = myRef.orderByChild(OWNER).equalTo(email)
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot in dataSnapshot.children) {
+                    val pet = snapshot.getValue(Pet::class.java)
+                    if (pet != null) {
+                        val petKey = snapshot.key
+                        if (petKey != null) {
+                            myRef.child(petKey).child(OWNER).setValue(newEmail)
+                                .addOnSuccessListener {
+                                    Log.d(TAG, "Owner updated for pet: $petKey")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.e(TAG, "Failed to update owner for pet: $petKey", e)
+                                }
+                        }
+                    }
+                }
+                cont.resume(true)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                cont.resumeWithException(error.toException())
+            }
+        })
+    }
+
+
+    /**
+     * Delete Pet
+     */
+    suspend fun deletePet(name: String): Boolean = suspendCoroutine { cont ->
+        val myRef = getDatabase().getReference(REFERENCE)
+        myRef.child(name).removeValue()
+            .addOnSuccessListener {
+                cont.resume(true)
+            }
+            .addOnFailureListener { e ->
+                cont.resumeWithException(e)
+            }
+    }
+    suspend fun deleteAllPetsOwnedBy(email: String): Boolean = suspendCoroutine { cont ->
+        val myRef = getDatabase().getReference(REFERENCE)
+        val query = myRef.orderByChild(OWNER).equalTo(email)
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (snapshot in dataSnapshot.children) {
+                    val petKey = snapshot.key
+                    if (petKey != null) {
+                        myRef.child(petKey).removeValue()
+                            .addOnSuccessListener {
+                                Log.d(TAG, "Pet with key $petKey deleted")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e(TAG, "Failed to delete pet with key $petKey", e)
+                            }
+                    }
+                }
+                cont.resume(true)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                cont.resumeWithException(error.toException())
+            }
+        })
+    }
+
 
     companion object{
         private const val REFERENCE = "pets"

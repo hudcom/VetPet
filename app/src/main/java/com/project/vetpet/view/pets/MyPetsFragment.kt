@@ -113,7 +113,6 @@ class MyPetsFragment : BaseFragment(), EditButtonClickListener {
 
 
     override fun onEditButtonClick(position: Int ) {
-        Toast.makeText(requireContext(),"EDIT BUTTON PRESSED",Toast.LENGTH_SHORT).show()
         val intent = Intent(requireContext(), EditPetActivity::class.java)
         intent.putExtra("pet", viewModel.getSelectedItem())
         startActivity(intent)

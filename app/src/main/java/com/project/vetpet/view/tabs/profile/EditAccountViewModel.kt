@@ -42,12 +42,12 @@ class EditAccountViewModel(
                 }
                 if (firestoreResult) {
                     val petResult = withContext(Dispatchers.IO) {
-                        petService.deleteAllUsersPets(email)
+                        petService.deleteAllPetsOwnedBy(email)
                     }
-                    //callback(petResult)
-                    // TODO
+                    callback(petResult)
+                } else{
+                    callback(false)
                 }
-                callback(firestoreResult)
             } else {
                 callback(false)
             }
@@ -59,15 +59,11 @@ class EditAccountViewModel(
     }
 
     fun editElement(email: String, password: String, name: String, number: String, city: String, callback: () -> Unit): Boolean {
+
         // Перевірка чи змінені поля чи ні
         if ((user?.email == email) && (user?.password == password) && (user?.fullName == name) && (user?.number == number) && (user?.city == city)) {
             return false
         }
-
-        if(!changeEmailAndPassword(email,password)){
-            return false
-        }
-
         // Оновлюємо інші дані про користувача
         val newUser = User(email, password, name, number, city)
 
@@ -83,10 +79,11 @@ class EditAccountViewModel(
         User.currentUser = newUser
         saveSharedPreferences(newUser)
         callback()
+
         return true
     }
 
-    private fun changeEmailAndPassword(email:String, password: String): Boolean{
+    fun changeEmailAndPassword(email:String, password: String): Boolean{
         if(getEmail() != email || getPassword() != password){
             // Перевірка відповідності email. Якщо email було змінено, то змінюємо записи 'Owner' у всіх домашніх улюбленцях та у таблиці авторизації змінюємо email
             if (userService.checkEmailVerification()) {

@@ -96,13 +96,18 @@ class EditAccountActivity : AppCompatActivity(), ToastNotifier, DialogListener {
     }
 
     private fun onEditBtnPressed(){
+        val email = binding.emailEditText.text.toString()
+        val password = binding.passwordEditText.text.toString()
         startLoadingAnimation()
-        if (viewModel.getEmail() != binding.emailEditText.text.toString() || viewModel.getPassword() != binding.passwordEditText.text.toString()){
+        if (viewModel.getEmail() != email || viewModel.getPassword() != password) {
             if (!viewModel.checkEmailVerification()){
                 showToast("Ваш email не верифіковано ви не можете змінити email або пароль")
                 resetChanges()
+            } else{
+                viewModel.changeEmailAndPassword(email,password)
             }
         }
+
         if (viewModel.editElement(
                 binding.emailEditText.text.toString(),
                 binding.passwordEditText.text.toString(),

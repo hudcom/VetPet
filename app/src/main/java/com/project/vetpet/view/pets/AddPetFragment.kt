@@ -43,13 +43,19 @@ class AddPetFragment : Fragment() {
     private fun addPetInDB(){
         if (fieldValidation()){
             startLoadAnimation()
-            createPet()
+            viewModel.addPet(
+                name = binding.petNameEditText.text.toString(),
+                age = Integer.parseInt(binding.petAge.selectedItem.toString()),
+                type = binding.petType.selectedItem.toString(),
+                breed = binding.petBreedEditText.text.toString()
+            ){
+                if (it){
+                    stopLoadAnimation()
+                    findNavController().popBackStack()
+                } else
+                    stopLoadAnimation()
 
-            Handler(Looper.getMainLooper()).postDelayed({
-                stopLoadAnimation()
-                Log.d(TAG, "Register pet in db complete")
-                findNavController().popBackStack()
-            },2000)
+            }
 
         } else
             Log.d(TAG,"Not all fields are filled in")
@@ -92,14 +98,6 @@ class AddPetFragment : Fragment() {
         return checkType
     }
 
-    private fun createPet(){
-        viewModel.addPet(
-            name = binding.petNameEditText.text.toString(),
-            age = Integer.parseInt(binding.petAge.selectedItem.toString()),
-            type = binding.petType.selectedItem.toString(),
-            breed = binding.petBreedEditText.text.toString()
-        )
-    }
 
     private fun initTypeSpinner(){
         val spinner = binding.petType
