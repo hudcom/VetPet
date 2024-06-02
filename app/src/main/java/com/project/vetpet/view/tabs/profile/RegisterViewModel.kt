@@ -6,6 +6,7 @@ import com.project.vetpet.model.User
 
 import com.project.vetpet.model.service.UserService
 import com.project.vetpet.utils.ToastNotifier
+import com.project.vetpet.view.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -14,7 +15,7 @@ import kotlinx.coroutines.withContext
 
 class RegisterViewModel(
     private val userService: UserService
-): ViewModel() {
+): BaseViewModel() {
 
     var toastNotifier: ToastNotifier? = null
 

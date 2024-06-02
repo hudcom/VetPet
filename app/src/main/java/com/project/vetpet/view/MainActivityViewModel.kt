@@ -8,10 +8,14 @@ import com.google.firebase.ktx.Firebase
 import com.project.vetpet.model.service.APP_PREFERENCES
 import com.project.vetpet.model.service.Preferences
 import com.project.vetpet.model.User
+import com.project.vetpet.model.service.ScheduleService
 import com.project.vetpet.model.service.UserService
+import com.project.vetpet.model.service.VeterinarianService
 
 class MainActivityViewModel(
-    private val firebaseService: UserService
+    private val firebaseService: UserService,
+    private val veterinarianService: VeterinarianService,
+    private val scheduleService: ScheduleService
 ): ViewModel() {
 
     fun initSharedPreferences(context: Context){
@@ -33,6 +37,7 @@ class MainActivityViewModel(
     fun initFirebase(){
         firebaseService.db = Firebase.firestore
         firebaseService.auth = Firebase.auth
+        veterinarianService.db = firebaseService.db
     }
 
     fun hasCurrentUser(): Boolean{

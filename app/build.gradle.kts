@@ -57,6 +57,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("joda-time:joda-time:2.10.12")
 
     implementation("com.google.firebase:firebase-firestore")
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))

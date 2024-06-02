@@ -6,13 +6,12 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.project.vetpet.adapters.EditButtonClickListener
+import com.project.vetpet.adapters.MoreButtonClickListener
 import com.project.vetpet.adapters.PetAdapter
 import com.project.vetpet.model.Pet
 import com.project.vetpet.model.service.PetService
 import com.project.vetpet.view.TAG
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 

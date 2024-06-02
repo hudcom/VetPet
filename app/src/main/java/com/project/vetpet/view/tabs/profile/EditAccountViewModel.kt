@@ -10,6 +10,7 @@ import com.project.vetpet.model.service.PetService
 import com.project.vetpet.model.service.Preferences
 import com.project.vetpet.model.service.UserService
 import com.project.vetpet.utils.ToastNotifier
+import com.project.vetpet.view.BaseViewModel
 import com.project.vetpet.view.TAG
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -19,7 +20,7 @@ import kotlinx.coroutines.withContext
 class EditAccountViewModel(
     private val userService: UserService,
     private val petService: PetService
-): ViewModel() {
+): BaseViewModel() {
 
     private var user: User? = null
 

@@ -13,18 +13,23 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.vetpet.R
+import com.project.vetpet.adapters.AppointmentAdapter
 import com.project.vetpet.view.MainActivity
-import com.project.vetpet.adapters.MenuItemsAdapter
+import com.project.vetpet.adapters.MenuItemAdapter
 import com.project.vetpet.databinding.FragmentAccountBinding
+import com.project.vetpet.model.MyAppointment
 import com.project.vetpet.model.User
+import com.project.vetpet.utils.ItemClickListener
 import com.project.vetpet.view.BaseFragment
+import com.project.vetpet.view.TAG
 import com.project.vetpet.view.dialog.DialogListener
 import com.project.vetpet.view.dialog.CustomDialog
 import com.project.vetpet.view.factory
 
-class AccountFragment : BaseFragment(), DialogListener, MenuItemsAdapter.AccountFragmentCallback {
+class AccountFragment : BaseFragment(), DialogListener, ItemClickListener {
     private lateinit var binding: FragmentAccountBinding
     private val viewModel: AccountViewModel by viewModels{ factory() }
+    private lateinit var adapter: AppointmentAdapter
 
 
     override fun onCreateView(
@@ -55,15 +60,29 @@ class AccountFragment : BaseFragment(), DialogListener, MenuItemsAdapter.Account
         initRecyclerView()
     }
 
-    override fun onMyPetsSelected() {
-        Navigation.findNavController(requireView()).navigate(R.id.myPetsFragment)
+    override fun onItemClickListener(title:String) {
+        when(title){
+            "Мої улюбленці" -> {Navigation.findNavController(requireView()).navigate(R.id.myPetsFragment)}
+            "Прийоми" -> { getAllUserAppointment() }
+            "Благодійність" -> { /*TODO*/ }
+            "Клініки поруч" -> { /*TODO*/ }
+        }
+    }
+
+    private fun getAllUserAppointment(){
+        viewModel.getAllUsersAppointment() {
+            val appointments: List<MyAppointment> = it
+            val intent = Intent(requireContext(), MyAppointmentActivity::class.java)
+            intent.putParcelableArrayListExtra("list", ArrayList(appointments))
+            startActivity(intent)
+        }
     }
 
     private fun initRecyclerView(){
         val recView = binding.accountRecyclerView
 
         recView.layoutManager = LinearLayoutManager(requireContext())
-        recView.adapter = MenuItemsAdapter(viewModel.getMenuItemsList(), this, requireContext())
+        recView.adapter = MenuItemAdapter(viewModel.getMenuItemsList(), this, requireContext())
     }
 
     private fun initTextView(){
@@ -104,7 +123,7 @@ class AccountFragment : BaseFragment(), DialogListener, MenuItemsAdapter.Account
     }
 
     override fun onNegativeClick() {
-        Log.d("Project log", "Choose 'Ні'")
+        Log.d(TAG, "Choose 'Ні'")
     }
 
 }

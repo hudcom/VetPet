@@ -1,16 +1,24 @@
 package com.project.vetpet.view.tabs.profile
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.project.vetpet.model.AppointmentSlot
+import com.project.vetpet.model.MyAppointment
 
 import com.project.vetpet.utils.MenuItem
 import com.project.vetpet.model.service.Preferences
 import com.project.vetpet.model.User
+import com.project.vetpet.model.service.ScheduleService
 import com.project.vetpet.model.service.UserService
+import com.project.vetpet.view.BaseViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AccountViewModel(
-    private val userService: UserService
-): ViewModel() {
+    private val userService: UserService,
+    private val scheduleService: ScheduleService
+): BaseViewModel() {
 
     fun deleteUser(){
         User.currentUser = null
@@ -27,11 +35,19 @@ class AccountViewModel(
     }
 
     fun getMenuItemsList(): ArrayList<MenuItem>{
-        return MenuItem.addMenuItems()
+        return MenuItem.addAccountMenuItems()
     }
 
     fun getUser(): Bundle {
         return User.currentUser!!.toBundle()
+    }
+
+    fun getAllUsersAppointment(callback: (List<MyAppointment>) -> Unit){
+        viewModelScope.launch {
+            val list = withContext(Dispatchers.IO) { scheduleService.getCompleteAppointmentsForClient(getUserEmail()) }
+            callback(list)
+        }
+
     }
 
 }

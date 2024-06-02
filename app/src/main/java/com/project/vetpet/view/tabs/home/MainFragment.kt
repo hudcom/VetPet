@@ -1,5 +1,6 @@
 package com.project.vetpet.view.tabs.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,16 +9,19 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import com.project.vetpet.view.veterinarian.FindVeterinarianActivity
 import com.project.vetpet.R
 import com.project.vetpet.databinding.FragmentMainBinding
 import com.project.vetpet.view.BaseFragment
 import com.project.vetpet.view.TAG
+import com.project.vetpet.view.factory
 
 class MainFragment : BaseFragment() {
 
     private lateinit var binding: FragmentMainBinding
+    private val viewModel: MainFragmentViewModel by viewModels{ factory() }
     private var doubleBackToExitPressedOnce = false
 
     override fun onCreateView(
@@ -33,7 +37,57 @@ class MainFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setSpinnerAdapter()
+        setOnclickListeners(view)
+    }
+
+    private fun setOnclickListeners(view:View){
         setOnBackPressedKeyListener(view)
+        binding.searchBtn.setOnClickListener { search() }
+    }
+
+    private fun search(){
+        val category = binding.categoryFindSpinner.selectedItem.toString()
+        val findCategoryItems = resources.getStringArray(R.array.find_category_items)
+
+        when(category){
+            findCategoryItems[0] -> { showToast("Оберіть категорію пошуку") }
+            findCategoryItems[1] -> { findVeterinarian() }
+            findCategoryItems[2] -> { findClinic() }
+            else -> { Log.e(TAG,"Error with choose category search") }
+        }
+
+    }
+
+    private fun findClinic(){
+        showToast("В процесі розробки")
+    }
+
+    private fun findVeterinarian(){
+        startLoadingAnimation()
+        val name = binding.searchEditText.text.toString()
+        viewModel.searchVeterinarianByName(name,
+            onResult = { veterinarians ->
+                if (veterinarians!!.isNotEmpty()) {
+                    for (veterinarian in veterinarians) {
+                        Log.d(TAG, "Found veterinarian: ${veterinarian.fullName}, ${veterinarian.workplace}")
+                    }
+                } else {
+                    Log.d(TAG, "No veterinarian found with the given name.")
+                }
+                val intent = Intent(requireContext(), FindVeterinarianActivity::class.java)
+                intent.putExtra("veterinaries", ArrayList(veterinarians))
+                startActivity(intent)
+            },
+            onError = { exception ->
+                Log.e(TAG, "Error searching for veterinarian", exception)
+            }
+        )
+        stopLoadingAnimation()
+    }
+
+    private fun setSpinnerAdapter(){
+        val spinner = binding.categoryFindSpinner
+        spinner.adapter = viewModel.createSpinner(requireActivity())
     }
 
     // Setting up an event handler for the Back key
@@ -62,15 +116,16 @@ class MainFragment : BaseFragment() {
         }
     }
 
+    private fun showToast(message:String){
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
 
-    private fun setSpinnerAdapter(){
-        val spinner = binding.categoryFindSpinner
-
-        spinner.adapter = ArrayAdapter.createFromResource(
-            requireActivity(),
-            R.array.find_category_items,
-            R.layout.custom_spinner_adapter
-        )
+    private fun startLoadingAnimation() {
+        binding.progressBar.bringToFront()
+        binding.progressBar.visibility = View.VISIBLE
+    }
+    private fun stopLoadingAnimation() {
+        binding.progressBar.visibility = View.GONE
     }
 
 }

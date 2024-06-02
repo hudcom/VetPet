@@ -11,7 +11,12 @@ import com.project.vetpet.view.pets.AddPetViewModel
 import com.project.vetpet.view.pets.EditPetViewModel
 import com.project.vetpet.view.tabs.profile.AuthViewModel
 import com.project.vetpet.view.pets.MyPetsViewModel
+import com.project.vetpet.view.tabs.home.MainFragmentViewModel
+import com.project.vetpet.view.tabs.profile.MyAppointmentViewModel
 import com.project.vetpet.view.tabs.profile.RegisterViewModel
+import com.project.vetpet.view.veterinarian.FindVeterinarianViewModel
+import com.project.vetpet.view.veterinarian.ScheduleFragmentViewModel
+import com.project.vetpet.view.veterinarian.VeterinarianViewModel
 
 class ViewModelFactory(
     private val app: App
@@ -19,9 +24,15 @@ class ViewModelFactory(
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = when (modelClass) {
-            MainActivityViewModel::class.java -> { MainActivityViewModel(app.userService) }
+            MainActivityViewModel::class.java -> { MainActivityViewModel(app.userService, app.veterinarianService,app.scheduleService) }
+            MainFragmentViewModel::class.java -> { MainFragmentViewModel(app.veterinarianService) }
+            FindVeterinarianViewModel::class.java -> { FindVeterinarianViewModel(app.veterinarianService) }
+            VeterinarianViewModel::class.java -> { VeterinarianViewModel(app.veterinarianService) }
+            ScheduleFragmentViewModel::class.java -> { ScheduleFragmentViewModel(app.scheduleService)
+            }
+            MyAppointmentViewModel::class.java -> { MyAppointmentViewModel() }
             AuthViewModel::class.java -> { AuthViewModel(app.userService) }
-            AccountViewModel::class.java -> { AccountViewModel(app.userService) }
+            AccountViewModel::class.java -> { AccountViewModel(app.userService,app.scheduleService) }
             RegisterViewModel::class.java -> { RegisterViewModel(app.userService) }
             MyPetsViewModel::class.java -> { MyPetsViewModel(app.petService) }
             AddPetViewModel::class.java -> { AddPetViewModel(app.petService) }

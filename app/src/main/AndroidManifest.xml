@@ -16,6 +16,18 @@
         android:theme="@style/Theme.VetPet"
         tools:targetApi="31">
         <activity
+            android:name=".view.tabs.profile.MyAppointmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.veterinarian.VeterinarianScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.veterinarian.VeterinarianActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.veterinarian.FindVeterinarianActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.tabs.profile.EditAccountActivity"
             android:exported="false" />
         <activity
