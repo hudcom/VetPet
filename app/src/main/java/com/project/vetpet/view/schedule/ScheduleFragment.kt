@@ -1,4 +1,4 @@
-package com.project.vetpet.view.veterinarian
+package com.project.vetpet.view.schedule
 
 import android.app.AlertDialog
 import android.os.Bundle

@@ -24,5 +24,6 @@ class VeterinarianViewModel(
     fun getVeterinarian(): Veterinarian? = currentVet
     fun getFullName():String = currentVet?.fullName ?: ""
     fun getWorkplace():String = currentVet?.workplace ?: ""
+    fun getAddress():String = currentVet?.address ?: ""
 
 }

@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.vetpet.adapters.MoreButtonClickListener
 import com.project.vetpet.databinding.ActivityFindVeterinarianBinding
+import com.project.vetpet.model.Clinics
 import com.project.vetpet.model.Veterinarian
 import com.project.vetpet.view.factory
 
@@ -42,18 +43,43 @@ class FindVeterinarianActivity : AppCompatActivity(),MoreButtonClickListener {
     }
 
     private fun initAdapter(){
-        val veterinarianList: MutableList<Veterinarian> = intent.getSerializableExtra("veterinaries") as MutableList<Veterinarian>
-
         val recView = binding.vetRecyclerView
-        recView.layoutManager = LinearLayoutManager(this)
-        recView.adapter = viewModel.createVetAdapter(this,veterinarianList,this)
-        stopLoadingAnimation()
 
-        if ((recView.adapter?.itemCount ?: 0) <= 0) {
-            binding.errorText.visibility = View.VISIBLE
-            binding.vetRecyclerView.visibility = View.INVISIBLE
+        if (intent.hasExtra("clinic")) {
+            val clinic = intent.getStringExtra("clinic")
+            clinic?.let {
+                viewModel.getVetList(it) { veterinarianList ->
+                    recView.layoutManager = LinearLayoutManager(this)
+                    recView.adapter = viewModel.createVetAdapter(this, veterinarianList.toMutableList(), this)
+
+                    if (veterinarianList.isEmpty()) {
+                        binding.errorText.visibility = View.VISIBLE
+                        binding.vetRecyclerView.visibility = View.INVISIBLE
+                    } else {
+                        binding.errorText.visibility = View.INVISIBLE
+                        binding.vetRecyclerView.visibility = View.VISIBLE
+                    }
+
+                    stopLoadingAnimation()
+                }
+            }
+        } else if (intent.hasExtra("veterinaries")) {
+            val veterinarianList: MutableList<Veterinarian> =
+                intent.getSerializableExtra("veterinaries") as MutableList<Veterinarian>
+
+            recView.layoutManager = LinearLayoutManager(this)
+            recView.adapter = viewModel.createVetAdapter(this, veterinarianList, this)
+
+            if (veterinarianList.isEmpty()) {
+                binding.errorText.visibility = View.VISIBLE
+                binding.vetRecyclerView.visibility = View.INVISIBLE
+            } else {
+                binding.errorText.visibility = View.INVISIBLE
+                binding.vetRecyclerView.visibility = View.VISIBLE
+            }
+
+            stopLoadingAnimation()
         }
-
     }
 
     override fun onMoreButtonClick(veterinarian:Veterinarian) {

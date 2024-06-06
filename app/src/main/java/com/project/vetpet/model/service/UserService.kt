@@ -347,11 +347,11 @@ class UserService {
     companion object{
         private const val USERS_KEY = "users"
 
-        private const val EMAIL = "Email"
-        private const val PASSWORD = "Password"
-        private const val FULL_NAME = "Full name"
-        private const val NUMBER = "Number"
-        private const val CITY = "City"
+        private const val EMAIL = "email"
+        private const val PASSWORD = "password"
+        private const val FULL_NAME = "fullName"
+        private const val NUMBER = "number"
+        private const val CITY = "city"
     }
 }
 

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.project.vetpet.view.clinic.FindClinicsActivity
 import com.project.vetpet.view.veterinarian.FindVeterinarianActivity
 import com.project.vetpet.R
 import com.project.vetpet.databinding.FragmentMainBinding
@@ -59,7 +60,25 @@ class MainFragment : BaseFragment() {
     }
 
     private fun findClinic(){
-        showToast("В процесі розробки")
+        startLoadingAnimation()
+        val name = binding.searchEditText.text.toString()
+        viewModel.searchClinicByName(name,
+            onResult = {clinics ->
+                if (clinics.isNotEmpty()) {
+                    for (clinic in clinics) {
+                        Log.d(TAG, "Found clinic: ${clinic.name}, ${clinic.address}")
+                    }
+                } else {
+                    Log.d(TAG, "No clinics found with the given name.")
+                }
+                val intent = Intent(requireContext(), FindClinicsActivity::class.java)
+                intent.putExtra("clinics", ArrayList(clinics))
+                startActivity(intent)
+            },
+        onError = { exception ->
+            Log.e(TAG, "Error searching for clinics", exception)
+        })
+        stopLoadingAnimation()
     }
 
     private fun findVeterinarian(){
@@ -123,9 +142,11 @@ class MainFragment : BaseFragment() {
     private fun startLoadingAnimation() {
         binding.progressBar.bringToFront()
         binding.progressBar.visibility = View.VISIBLE
+        binding.findBlock.visibility = View.INVISIBLE
     }
     private fun stopLoadingAnimation() {
         binding.progressBar.visibility = View.GONE
+        binding.findBlock.visibility = View.VISIBLE
     }
 
 }

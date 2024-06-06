@@ -22,5 +22,13 @@ class MenuItem(
                 MenuItem(3,"Відгуки", "ic_reviews")
             )
         }
+
+        fun addClinicMenuItem(): ArrayList<MenuItem>{
+            return arrayListOf(
+                MenuItem(1,"Розташування клініки", "ic_bm_map"),
+                MenuItem(2,"Ветеринари", "ic_bm_profile"),
+                MenuItem(3,"Відгуки", "ic_reviews")
+            )
+        }
     }
 }

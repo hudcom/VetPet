@@ -3,6 +3,7 @@ package com.project.vetpet.view.veterinarian
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +12,10 @@ import com.project.vetpet.databinding.ActivityVeterinarianBinding
 import com.project.vetpet.model.User
 import com.project.vetpet.model.Veterinarian
 import com.project.vetpet.utils.ItemClickListener
+import com.project.vetpet.view.MainActivity
+import com.project.vetpet.view.TAG
 import com.project.vetpet.view.factory
+import com.project.vetpet.view.schedule.VeterinarianScheduleActivity
 
 class VeterinarianActivity : AppCompatActivity(), ItemClickListener {
 
@@ -75,8 +79,11 @@ class VeterinarianActivity : AppCompatActivity(), ItemClickListener {
     }
 
     private fun onFindClinicButtonClicked(){
-        Toast.makeText(this, "В стадії розробки. Локація", Toast.LENGTH_SHORT).show()
-        /*TODO*/
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("searchQuery", viewModel.getAddress())
+            Log.d(TAG, "VeterinarianActivity: ${viewModel.getAddress()}")
+        }
+        startActivity(intent)
     }
 
     private fun onReviewButtonClicked(){

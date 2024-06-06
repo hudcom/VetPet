@@ -40,9 +40,14 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.project.vetpet.MapsFragment"
+        android:name="com.project.vetpet.view.tabs.map.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" />
+        tools:layout="@layout/fragment_maps" >
+        <argument
+            android:name="searchQuery"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.project.vetpet.view.tabs.profile.AccountFragment"

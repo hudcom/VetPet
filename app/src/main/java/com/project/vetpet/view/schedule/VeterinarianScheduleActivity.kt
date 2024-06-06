@@ -1,4 +1,4 @@
-package com.project.vetpet.view.veterinarian
+package com.project.vetpet.view.schedule
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

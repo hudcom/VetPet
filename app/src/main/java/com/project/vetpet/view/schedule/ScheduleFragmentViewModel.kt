@@ -1,4 +1,4 @@
-package com.project.vetpet.view.veterinarian
+package com.project.vetpet.view.schedule
 
 import android.util.Log
 import androidx.lifecycle.viewModelScope

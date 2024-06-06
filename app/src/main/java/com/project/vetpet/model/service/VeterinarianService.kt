@@ -1,20 +1,9 @@
 package com.project.vetpet.model.service
 
-import android.util.Log
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
+
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.project.vetpet.model.Pet
-import com.project.vetpet.model.User
 import com.project.vetpet.model.Veterinarian
-import com.project.vetpet.view.TAG
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -33,8 +22,9 @@ class VeterinarianService {
                 val veterinarians = querySnapshot.documents.mapNotNull { document ->
                     val docName = document.id // Ім'я документа
                     val workplace = document.getString("workplace")
+                    val address = document.getString("address")
                     if (workplace != null) {
-                        Veterinarian(docName, workplace)
+                        Veterinarian(docName, workplace, address.toString())
                     } else {
                         null
                     }
@@ -43,6 +33,29 @@ class VeterinarianService {
             }
             .addOnFailureListener { exception ->
                 cont.resumeWithException(exception)
+            }
+    }
+
+    suspend fun findVeterinariansByWorkplace(workplace: String): List<Veterinarian> = suspendCancellableCoroutine { continuation ->
+        val db = FirebaseFirestore.getInstance()
+        db.collection("veterinarian")
+            .whereEqualTo("workplace", workplace)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val veterinarians = querySnapshot.documents.mapNotNull { document ->
+                    val fullName = document.id // Отримуємо ім'я файлу
+                    val workplace = document.getString("workplace")
+                    val address = document.getString("address")
+                    if (workplace != null && address != null) {
+                        Veterinarian(fullName, workplace, address)
+                    } else {
+                        null
+                    }
+                }
+                continuation.resume(veterinarians)
+            }
+            .addOnFailureListener { exception ->
+                continuation.resumeWithException(exception)
             }
     }
 

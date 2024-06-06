@@ -33,7 +33,7 @@ class VeterinarianAdapter (private val listener: MoreButtonClickListener,
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         holder.vetName.text = list[position].fullName
-        holder.vetWorkplace.text = list[position].workplace
+        holder.vetWorkplace.text = "${list[position].workplace}, ${list[position].address}"
 
         holder.vetPhoto.setImageResource(R.drawable.ic_bm_profile)
 

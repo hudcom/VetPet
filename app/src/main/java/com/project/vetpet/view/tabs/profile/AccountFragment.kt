@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.vetpet.R
@@ -25,6 +26,7 @@ import com.project.vetpet.view.TAG
 import com.project.vetpet.view.dialog.DialogListener
 import com.project.vetpet.view.dialog.CustomDialog
 import com.project.vetpet.view.factory
+import com.project.vetpet.view.tabs.map.MapsFragment
 
 class AccountFragment : BaseFragment(), DialogListener, ItemClickListener {
     private lateinit var binding: FragmentAccountBinding
@@ -65,7 +67,19 @@ class AccountFragment : BaseFragment(), DialogListener, ItemClickListener {
             "Мої улюбленці" -> {Navigation.findNavController(requireView()).navigate(R.id.myPetsFragment)}
             "Прийоми" -> { getAllUserAppointment() }
             "Благодійність" -> { /*TODO*/ }
-            "Клініки поруч" -> { /*TODO*/ }
+            "Клініки поруч" -> { findClinicsNearby() }
+        }
+    }
+
+    private fun findClinicsNearby() {
+        viewModel.findClinicNearby { clinicAddresses ->
+            val bundle = Bundle().apply {
+                /*putStringArrayList("clinicAddresses", ArrayList(clinicAddresses))*/
+                Log.d(TAG,"ACCOUNT_FRAGMENT: $clinicAddresses")
+                MapsFragment.clinicAddresses = clinicAddresses
+            }
+            findNavController().navigate(R.id.mapsFragment, bundle)
+            (activity as MainActivity).updateBottomNavigationMenu(R.id.mapsFragment)
         }
     }
 

@@ -2,6 +2,7 @@ package com.project.vetpet
 
 import android.app.Application
 import com.google.firebase.FirebaseApp
+import com.project.vetpet.model.service.ClinicsService
 import com.project.vetpet.model.service.PetService
 import com.project.vetpet.model.service.ScheduleService
 
@@ -14,6 +15,7 @@ class App : Application() {
     val userService = UserService()
     val veterinarianService  = VeterinarianService()
     val scheduleService = ScheduleService()
+    val clinicsService = ClinicsService()
 
     override fun onCreate() {
         super.onCreate()

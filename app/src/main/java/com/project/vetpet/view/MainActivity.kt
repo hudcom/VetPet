@@ -27,6 +27,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.initFirebase()
+        bottomNavView = binding.bottomBar
+
+        if (intent.hasExtra("searchQuery")) {
+            val searchQuery = intent.getStringExtra("searchQuery")
+            Log.d(TAG, "MainActivity: $searchQuery")
+            if (searchQuery != null) {
+                val bundle = Bundle().apply {
+                    putString("searchQuery", searchQuery)
+                }
+                findNavController(R.id.main_fragment).navigate(R.id.mapsFragment, bundle)
+                updateBottomNavigationMenu(R.id.mapsFragment)
+            }
+        }
     }
 
     override fun onStart() {
@@ -67,7 +80,6 @@ class MainActivity : AppCompatActivity() {
     *
     */
     private fun initBottomNavigation(){
-        bottomNavView = binding.bottomBar
         navController = findNavController(R.id.main_fragment)
 
         bottomNavView.setOnItemSelectedListener { item ->

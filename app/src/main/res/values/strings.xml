@@ -123,7 +123,8 @@
     <string name="acc_edit_info_label">Редагувати інформацію про користувача</string>
     <string name="input_search">Введіть запит</string>
     <string name="vet_not_founded">Ветеринарів з таким ім\'ям не знайдено</string>
-    <string name="test">Test\n</string>
+    <string name="clinics_not_founded">Клінік з таким ім\'ям не знайдено</string>
+    <string name="test">Test</string>
     <string name="find_result">Результати пошуку</string>
 
 </resources>
