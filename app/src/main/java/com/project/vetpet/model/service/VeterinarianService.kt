@@ -13,6 +13,18 @@ class VeterinarianService {
 
     lateinit var db: FirebaseFirestore
 
+    suspend fun addVeterinarian(veterinarian: Veterinarian): Boolean = suspendCoroutine { cont ->
+        db.collection(REFERENCE)
+            .document(veterinarian.fullName)
+            .set(veterinarian)
+            .addOnSuccessListener {
+                cont.resume(true)
+            }
+            .addOnFailureListener { exception ->
+                cont.resume(false)
+            }
+    }
+
     suspend fun searchVeterinarianByName(name: String): MutableList<Veterinarian> = suspendCoroutine { cont ->
         db.collection(REFERENCE)
             .whereGreaterThanOrEqualTo(FieldPath.documentId(), name)

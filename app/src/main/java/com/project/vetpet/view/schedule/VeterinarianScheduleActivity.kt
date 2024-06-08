@@ -18,22 +18,18 @@ class VeterinarianScheduleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_veterinarian_schedule)
 
-        // Налаштовуємо ViewPager
         val viewPager: ViewPager = findViewById(R.id.viewPager)
         val adapter = ViewPagerAdapter(supportFragmentManager)
         viewPager.adapter = adapter
 
-        // Налаштовуємо TabLayout
         val tabLayout: TabLayout = findViewById(R.id.tabLayout)
         tabLayout.setupWithViewPager(viewPager)
-
-
     }
 
     private val dateFormat = DateTimeFormat.forPattern(DATE_FORMAT)
 
     private fun getCurrentDate(): DateTime {
-        return DateTime.now().withTimeAtStartOfDay()
+        return DateTime.now()
     }
 
     private fun getDateForPosition(position: Int): DateTime {
@@ -44,31 +40,18 @@ class VeterinarianScheduleActivity : AppCompatActivity() {
         return dateTime.toString(DATE_FORMAT)
     }
 
-    private fun getDatesForWeek(): List<String> {
-        val dates = mutableListOf<String>()
-        val currentDate = getCurrentDate()
-        for (i in 0 until 7) {
-            val date = formatDate(currentDate.plusDays(i))
-            dates.add(date)
-        }
-        return dates
-    }
-
     private inner class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         override fun getItem(position: Int): Fragment {
-            // Повертаємо новий екземпляр ScheduleFragment з відповідною датою
             val date = getDateForPosition(position).toString(dateFormat)
             val veterinarian = intent.getSerializableExtra("veterinarian") as Veterinarian
             return ScheduleFragment.newInstance(date, veterinarian)
         }
 
         override fun getCount(): Int {
-            // Повертаємо кількість днів, які ви хочете відобразити
             return 7
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
-            // Повертаємо заголовок вкладки для відповідного дня
             return formatDate(getDateForPosition(position))
         }
     }

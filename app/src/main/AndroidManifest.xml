@@ -27,7 +27,18 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-
+        <activity
+            android:name=".view.clinicfunctional.RegisterClinicActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.clinicfunctional.ClinicAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.clinicfunctional.AuthClinicActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.clinicfunctional.AddVeterinarianActivity"
+            android:exported="false" />
         <activity
             android:name=".view.clinic.ClinicActivity"
             android:exported="false" />

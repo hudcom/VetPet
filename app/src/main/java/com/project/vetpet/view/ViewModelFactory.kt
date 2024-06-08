@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.project.vetpet.App
+import com.project.vetpet.view.tabs.more.MoreFragmentViewModel
 import com.project.vetpet.view.clinic.ClinicViewModel
 import com.project.vetpet.view.clinic.FindClinicsViewModel
 import com.project.vetpet.view.tabs.profile.EditAccountViewModel
@@ -31,8 +32,9 @@ class ViewModelFactory(
             MainFragmentViewModel::class.java -> { MainFragmentViewModel(app.veterinarianService, app.clinicsService) }
             FindVeterinarianViewModel::class.java -> { FindVeterinarianViewModel(app.veterinarianService) }
             FindClinicsViewModel::class.java -> { FindClinicsViewModel(app.clinicsService) }
-            ClinicViewModel::class.java -> { ClinicViewModel() }
+            ClinicViewModel::class.java -> { ClinicViewModel(app.clinicsService, app.veterinarianService) }
             MapsViewModel::class.java -> { MapsViewModel() }
+            MoreFragmentViewModel::class.java -> { MoreFragmentViewModel() }
             VeterinarianViewModel::class.java -> { VeterinarianViewModel(app.veterinarianService) }
             ScheduleFragmentViewModel::class.java -> { ScheduleFragmentViewModel(app.scheduleService) }
             MyAppointmentViewModel::class.java -> { MyAppointmentViewModel() }

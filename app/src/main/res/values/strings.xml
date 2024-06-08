@@ -126,5 +126,18 @@
     <string name="clinics_not_founded">Клінік з таким ім\'ям не знайдено</string>
     <string name="test">Test</string>
     <string name="find_result">Результати пошуку</string>
+    <string name="about_program">Про програму</string>
+    <string name="authentication">Авторизуватися</string>
+    <string name="description_for_clinics">Якщо ви представник клініки та хочете співпрацювати, пропонуємо вам зареєструватися або авторизуватися в нашому додатку.</string>
+    <string name="for_clinics">Для клінік</string>
+    <string name="about_program_description">Ця програма створена для в рамках дипломного проєкту студентом ХНУРЕ</string>
+    <string name="creator">Розробник: Ємець Денис</string>
+    <string name="version">Версія: 1.0</string>
+    <string name="register_clinic">Зареєструвати клініку</string>
+    <string name="clinic_name">Назва клініки</string>
+    <string name="clinic_address">Адреса клініки</string>
+    <string name="auth_clinic">Авторизувати клініку</string>
+    <string name="list_of_employee">Список працівників</string>
+    <string name="add_employee">Додати робітника</string>
 
 </resources>
