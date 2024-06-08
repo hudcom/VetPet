@@ -10,14 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.vetpet.NotificationFragment
 import com.project.vetpet.R
 import com.project.vetpet.adapters.AppointmentAdapter
 import com.project.vetpet.view.MainActivity
 import com.project.vetpet.adapters.MenuItemAdapter
 import com.project.vetpet.databinding.FragmentAccountBinding
+import com.project.vetpet.model.Message
 import com.project.vetpet.model.MyAppointment
 import com.project.vetpet.model.User
 import com.project.vetpet.utils.ItemClickListener
@@ -55,6 +56,16 @@ class AccountFragment : BaseFragment(), DialogListener, ItemClickListener {
             (activity as MainActivity).updateBottomNavigationMenu(R.id.mainFragment)
             findNavController().popBackStack(R.id.mainFragment,false)
         }
+
+        if (!viewModel.checkVerification()) {
+            NotificationFragment.addMessage(
+                Message(
+                    "Верифікація аккаунту",
+                    "Перейдіть на пошту та підтвердіть свою електронну пошту для доступу до додаткових функцій."
+                )
+            )
+        }
+
 
         initTextView()
         setOnClickListener()

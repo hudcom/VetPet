@@ -60,4 +60,6 @@ class AccountViewModel(
         }
 
     }
+
+    fun checkVerification():Boolean = userService.checkEmailVerification()
 }

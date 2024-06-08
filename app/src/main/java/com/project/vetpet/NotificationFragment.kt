@@ -1,27 +1,37 @@
 package com.project.vetpet
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.project.vetpet.adapters.MessageAdapter
+import com.project.vetpet.model.Message
 import com.project.vetpet.view.BaseFragment
-import com.project.vetpet.view.MainActivity
 
 
 class NotificationFragment : BaseFragment() {
+
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false)
+        val view = inflater.inflate(R.layout.fragment_notification, container, false)
+        recyclerView = view.findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        adapter = MessageAdapter(messages)
+        recyclerView.adapter = adapter
+        return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setOnBackPressedKeyListener(view)
+    companion object{
+        private lateinit var adapter: MessageAdapter
+        private val messages = mutableListOf<Message>()
+        fun addMessage(message: Message) {
+            messages.add(message)
+        }
     }
-
 }

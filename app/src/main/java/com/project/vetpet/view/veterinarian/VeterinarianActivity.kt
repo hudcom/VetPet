@@ -49,7 +49,7 @@ class VeterinarianActivity : AppCompatActivity(), ItemClickListener {
         viewModel.extractDataFromBundle(intent.getSerializableExtra("veterinarian") as? Veterinarian)
 
         binding.veterinaryName.text = viewModel.getFullName()
-        binding.veterinaryWorkplace.text = viewModel.getWorkplace()
+        binding.veterinaryWorkplace.text = "${viewModel.getWorkplace()}, ${viewModel.getAddress()}"
     }
 
     private fun initRecyclerView(){

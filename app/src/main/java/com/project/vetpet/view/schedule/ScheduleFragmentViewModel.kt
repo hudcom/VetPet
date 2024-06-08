@@ -51,7 +51,7 @@ class ScheduleFragmentViewModel(
             try {
                 val success = scheduleService.createVetSchedule(name, date)
                 if (success) {
-                   Log.d(TAG,"Success")
+                    Log.d(TAG,"Success")
                 } else {
                     Log.d(TAG,"Not success")
                 }

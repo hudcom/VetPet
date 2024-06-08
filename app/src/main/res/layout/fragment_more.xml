@@ -1,14 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/large_space"
+    android:background="@color/light_gray"
     tools:context=".MoreFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="@dimen/logo_size"
+        android:layout_height="@dimen/logo_size"
+        android:layout_gravity="center"
+        android:contentDescription="@string/app_name"
+        app:srcCompat="@drawable/ic_main_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/aboutTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/for_clinics"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/big_text"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingBottom="16dp"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/description1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/description_for_clinics"
+        android:textColor="@color/dark_gray"
+        app:layout_constraintTop_toBottomOf="@+id/aboutTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/linkToAuth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/authentication"
+        android:textColor="@color/links"
+        android:layout_marginVertical="@dimen/small_space"
+        app:layout_constraintStart_toStartOf="@id/description1"
+        app:layout_constraintTop_toBottomOf="@+id/description1"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/aboutTitle1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/about_program"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/big_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/aboutDescription1"
+            android:paddingBottom="16dp"
+            />
+
+        <TextView
+            android:id="@+id/aboutDescription1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/about_program_description"
+            android:textColor="@color/dark_gray"
+            app:layout_constraintTop_toBottomOf="@id/aboutTitle1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/line1"
+
+            android:paddingBottom="8dp"
+            />
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/aboutDescription1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/aboutDescription2"
+            android:layout_marginBottom="24dp"
+            />
+
+        <TextView
+            android:id="@+id/aboutDescription2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/creator"
+            android:textColor="@color/dark_gray"
+            app:layout_constraintTop_toBottomOf="@id/line1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:paddingBottom="8dp"
+            />
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/aboutDescription2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/aboutDescription3"
+            />
+
+        <TextView
+            android:id="@+id/aboutDescription3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="@string/version"
+            android:textColor="@color/dark_gray"
+            app:layout_constraintBottom_toTopOf="@id/line3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line2" />
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/aboutDescription3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
