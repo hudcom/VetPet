@@ -1,4 +1,4 @@
-package com.project.vetpet
+package com.project.vetpet.view.clinicfunctional
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,10 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import com.project.vetpet.R
 import com.project.vetpet.databinding.ActivityRegisterClinicBinding
-import com.project.vetpet.databinding.FragmentMoreBinding
 import com.project.vetpet.model.Clinics
-import com.project.vetpet.view.clinic.ClinicActivity
 import com.project.vetpet.view.clinic.ClinicViewModel
 import com.project.vetpet.view.factory
 

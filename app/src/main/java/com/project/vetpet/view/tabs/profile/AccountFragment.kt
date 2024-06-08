@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.project.vetpet.NotificationFragment
+import com.project.vetpet.view.tabs.notification.NotificationFragment
 import com.project.vetpet.R
 import com.project.vetpet.adapters.AppointmentAdapter
 import com.project.vetpet.view.MainActivity

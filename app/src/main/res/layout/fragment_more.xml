@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/large_space"
     android:background="@color/light_gray"
-    tools:context=".MoreFragment">
+    tools:context=".view.tabs.more.MoreFragment">
 
     <ImageView
         android:id="@+id/logo"

@@ -1,27 +1,20 @@
-package com.project.vetpet
+package com.project.vetpet.view.clinicfunctional
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.project.vetpet.adapters.MenuItemAdapter
 import com.project.vetpet.adapters.MoreButtonClickListener
 import com.project.vetpet.adapters.VeterinarianAdapter
 import com.project.vetpet.databinding.ActivityClinicAccountBinding
-import com.project.vetpet.databinding.ActivityClinicBinding
-import com.project.vetpet.databinding.ActivityRegisterClinicBinding
 import com.project.vetpet.model.Clinics
 import com.project.vetpet.model.Veterinarian
-import com.project.vetpet.utils.ItemClickListener
-import com.project.vetpet.utils.MenuItem
 import com.project.vetpet.view.clinic.ClinicViewModel
 import com.project.vetpet.view.factory
 import com.project.vetpet.view.schedule.VeterinarianScheduleActivity
-import com.project.vetpet.view.veterinarian.VeterinarianActivity
 
 class ClinicAccountActivity : AppCompatActivity(), MoreButtonClickListener {
 

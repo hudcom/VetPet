@@ -1,4 +1,4 @@
-package com.project.vetpet
+package com.project.vetpet.view.tabs.notification
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.project.vetpet.R
 import com.project.vetpet.adapters.MessageAdapter
 import com.project.vetpet.model.Message
 import com.project.vetpet.view.BaseFragment

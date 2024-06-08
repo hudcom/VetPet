@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.project.vetpet.NotificationFragment"
+        android:name="com.project.vetpet.view.tabs.notification.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
     <fragment
@@ -69,7 +69,7 @@
         tools:layout="@layout/fragment_add_pet" />
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.project.vetpet.MoreFragment"
+        android:name="com.project.vetpet.view.tabs.more.MoreFragment"
         android:label="fragment_more"
         tools:layout="@layout/fragment_more" />
 </navigation>

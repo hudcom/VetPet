@@ -1,11 +1,10 @@
-package com.project.vetpet
+package com.project.vetpet.view.clinicfunctional
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import com.project.vetpet.databinding.ActivityAddVeterinarianBinding
-import com.project.vetpet.databinding.ActivityClinicAccountBinding
 import com.project.vetpet.model.Clinics
 import com.project.vetpet.view.clinic.ClinicViewModel
 import com.project.vetpet.view.factory

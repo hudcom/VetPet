@@ -1,18 +1,15 @@
-package com.project.vetpet
+package com.project.vetpet.view.tabs.more
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.project.vetpet.databinding.FragmentMainBinding
 import com.project.vetpet.databinding.FragmentMoreBinding
 import com.project.vetpet.view.BaseFragment
-import com.project.vetpet.view.clinic.ClinicActivity
+import com.project.vetpet.view.clinicfunctional.AuthClinicActivity
 import com.project.vetpet.view.factory
-import com.project.vetpet.view.tabs.home.MainFragmentViewModel
 
 class MoreFragment : BaseFragment() {
 

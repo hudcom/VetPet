@@ -5,8 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.project.vetpet.App
-import com.project.vetpet.MoreFragment
-import com.project.vetpet.MoreFragmentViewModel
+import com.project.vetpet.view.tabs.more.MoreFragmentViewModel
 import com.project.vetpet.view.clinic.ClinicViewModel
 import com.project.vetpet.view.clinic.FindClinicsViewModel
 import com.project.vetpet.view.tabs.profile.EditAccountViewModel
