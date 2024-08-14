@@ -65,6 +65,16 @@ class AccountFragment : BaseFragment(), DialogListener, ItemClickListener {
             findNavController().popBackStack(R.id.mainFragment,false)
         }
 
+        if (!viewModel.checkVerification()) {
+            NotificationFragment.addMessage(
+                Message(
+                    "Верифікація аккаунту",
+                    "Перейдіть на пошту та підтвердіть свою електронну пошту для доступу до додаткових функцій."
+                )
+            )
+        }
+
+
         initTextView()
         setOnClickListener()
         (activity as MainActivity).initTopBar()
